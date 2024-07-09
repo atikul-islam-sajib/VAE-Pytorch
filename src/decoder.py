@@ -66,8 +66,6 @@ if __name__ == "__main__":
     in_channels = 64
     out_channels = 128
 
-    print(f"in_channels: {in_channels}, out_channels: {out_channels}")
-
     layers.append(DecoderBlock(in_channels=in_channels, out_channels=out_channels))
 
     in_channels = out_channels
