@@ -9,3 +9,7 @@ dataloader:
   image_size: 224
   batch_size: 4
   split_size: 0.30
+
+VAE:
+  in_channels: 3
+  out_channels: 128 # It should be like 128, 256, 512
