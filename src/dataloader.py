@@ -1,12 +1,13 @@
 import os
 import cv2
+import sys
+import zipfile
+import traceback
 from PIL import Image
 from tqdm import tqdm
-import sys
-import traceback
-import zipfile
+import matplotlib.pyplot as plt
 from torchvision import transforms
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import DataLoader
 from sklearn.model_selection import train_test_split
 
 sys.path.append("src/")
@@ -139,8 +140,53 @@ class Loader:
             )
         )
 
+    @staticmethod
+    def plot_images():
+        processed_data_path = config()["path"]["PROCESSED_DATA_PATH"]
+
+        valid_dataloader = load(
+            filename=os.path.join(processed_data_path, "valid_dataloader.pkl")
+        )
+
+        X, y = next(iter(valid_dataloader))
+
+        number_of_rows = X.size(0) // 2
+        number_of_columns = X.size(0) // number_of_rows
+
+        plt.figure(figsize=(20, 10))
+
+        for index, image in enumerate(X):
+            imageX = image.permute(1, 2, 0).detach().numpy()
+            imagey = y[index].permute(1, 2, 0).detach().numpy()
+
+            imageX = (imageX - imageX.min()) / (imageX.max() - imageX.min())
+            imagey = (imagey - imagey.min()) / (imagey.max() - imagey.min())
+
+            plt.subplot(2 * number_of_rows, 2 * number_of_columns, 2 * index + 1)
+            plt.title("actual".capitalize())
+            plt.imshow(imageX)
+            plt.axis("off")
+
+            plt.subplot(2 * number_of_rows, 2 * number_of_columns, 2 * index + 2)
+            plt.title("target".capitalize())
+            plt.imshow(imagey)
+            plt.axis("off")
+
+        plt.tight_layout()
+        plt.savefig(os.path.join(config()["path"]["FILES_PATH"], "images.png"))
+        plt.show()
+
+        print(
+            "Images saved in the path {}".format(
+                config()["path"]["FILES_PATH"]
+            ).capitalize()
+        )
+
 
 if __name__ == "__main__":
     loader = Loader(image_path="./data/raw/dataset1.zip")
-    # loader.unzip_folder()
+
+    loader.unzip_folder()
     loader.create_dataloader()
+
+    Loader.plot_images()
