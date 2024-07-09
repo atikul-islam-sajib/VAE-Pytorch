@@ -1,0 +1,2 @@
+,total_data(X),total_data(y),total_data(X+y),train_image_size(X),valid_image_size(X)
+Details,12,6,18,"torch.Size([12, 3, 224, 224])","torch.Size([6, 3, 224, 224])"

@@ -4,6 +4,7 @@ import sys
 import zipfile
 import argparse
 import traceback
+import pandas as pd
 from PIL import Image
 from tqdm import tqdm
 import matplotlib.pyplot as plt
@@ -183,6 +184,44 @@ class Loader:
             ).capitalize()
         )
 
+    @staticmethod
+    def details_dataset():
+        processed_data_path = config()["path"]["PROCESSED_DATA_PATH"]
+
+        train_dataloader = load(
+            filename=os.path.join(processed_data_path, "train_dataloader.pkl")
+        )
+        valid_dataloader = load(
+            filename=os.path.join(processed_data_path, "valid_dataloader.pkl")
+        )
+
+        trainX, trainY = next(iter(train_dataloader))
+        validX, validY = next(iter(valid_dataloader))
+
+        dataframe = pd.DataFrame(
+            {
+                "total_data(X)": [str(sum(X.size(0) for X, _ in train_dataloader))],
+                "total_data(y)": [str(sum(X.size(0) for X, _ in valid_dataloader))],
+                "total_data(X+y)": [
+                    str(
+                        sum(X.size(0) for X, _ in train_dataloader)
+                        + sum(X.size(0) for X, _ in valid_dataloader)
+                    )
+                ],
+                "train_image_size(X)": [str(trainX.size())],
+                "valid_image_size(X)": [str(validX.size())],
+            },
+            index=["details".capitalize()],
+        )
+
+        dataframe.to_csv(os.path.join(config()["path"]["FILES_PATH"], "details.csv"))
+
+        print(
+            "dataset details saved in the path {}".format(
+                config()["path"]["FILES_PATH"]
+            ).capitalize()
+        )
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -231,7 +270,8 @@ if __name__ == "__main__":
             split_size=args.split_size,
         )
 
-        # loader.unzip_folder()
+        loader.unzip_folder()
         loader.create_dataloader()
 
         Loader.plot_images()
+        Loader.details_dataset()
