@@ -73,7 +73,8 @@ class VariationalAutoEncoder(nn.Module):
                     kernel_size=self.kernel_size + 1,
                     stride=self.stride_size + 1,
                     padding=self.padding_size,
-                )
+                ),
+                nn.Tanh(),
             )
         )
 
