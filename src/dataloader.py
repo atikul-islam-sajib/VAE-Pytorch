@@ -11,7 +11,7 @@ from sklearn.model_selection import train_test_split
 
 sys.path.append("src/")
 
-from utils import config, CustomException
+from utils import config, dump, load, CustomException
 
 
 class Loader:
@@ -113,20 +113,34 @@ class Loader:
 
     def create_dataloader(self):
         self.dataset = self.extract_features()
+        self.processed_data_path = config()["path"]["PROCESSED_DATA_PATH"]
 
         self.train_dataloader = DataLoader(
-            dataset=zip(list(self.dataset["X_train"]), list(self.dataset["y_train"])),
+            dataset=list(zip(self.dataset["X_train"], list(self.dataset["y_train"]))),
             batch_size=self.batch_size,
             shuffle=True,
         )
 
         self.valid_dataloader = DataLoader(
-            dataset=zip(list(self.dataset["X_test"]), list(self.dataset["y_test"])),
+            dataset=list(zip(self.dataset["X_test"], list(self.dataset["y_test"]))),
             batch_size=self.batch_size * self.batch_size,
             shuffle=True,
+        )
+
+        for value, filename in [
+            (self.train_dataloader, "train_dataloader.pkl"),
+            (self.valid_dataloader, "valid_dataloader.pkl"),
+        ]:
+            dump(value=value, filename=os.path.join(self.processed_data_path, filename))
+
+        print(
+            "DataLoader created successfully and stored in the path {}".capitalize().format(
+                self.processed_data_path
+            )
         )
 
 
 if __name__ == "__main__":
     loader = Loader(image_path="./data/raw/dataset1.zip")
     # loader.unzip_folder()
+    loader.create_dataloader()
