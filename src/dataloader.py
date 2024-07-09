@@ -3,8 +3,11 @@ import cv2
 from PIL import Image
 from tqdm import tqdm
 import sys
+import traceback
 import zipfile
 from torchvision import transforms
+from torch.utils.data import Dataset, DataLoader
+from sklearn.model_selection import train_test_split
 
 sys.path.append("src/")
 
@@ -12,10 +15,13 @@ from utils import config, CustomException
 
 
 class Loader:
-    def __init__(self, image_path=None, channels=3, image_size=256, split_size=0.20):
+    def __init__(
+        self, image_path=None, channels=3, image_size=256, batch_size=4, split_size=0.20
+    ):
         self.image_path = image_path
         self.channels = channels
         self.image_size = image_size
+        self.batch_size = batch_size
         self.split_size = split_size
 
         self.actual = []
@@ -47,6 +53,21 @@ class Loader:
             ]
         )
 
+    def split_dataset(self, X, y):
+        if isinstance(X, list) and isinstance(y, list):
+            X_train, X_test, y_train, y_test = train_test_split(
+                X, y, test_size=self.split_size, random_state=42
+            )
+
+            return {
+                "X_train": X_train,
+                "X_test": X_test,
+                "y_train": y_train,
+                "y_test": y_test,
+            }
+        else:
+            raise CustomException("X and y should be list".capitalize())
+
     def extract_features(self):
         self.directory = os.path.join(config()["path"]["RAW_DATA_PATH"], "dataset")
         self.X = os.path.join(config()["path"]["RAW_DATA_PATH"], "dataset", "X")
@@ -74,8 +95,38 @@ class Loader:
 
         assert len(self.actual) == len(self.target)
 
+        try:
+            dataset = self.split_dataset(X=self.actual, y=self.target)
+
+        except CustomException as e:
+            print("An error occured: ", e)
+            traceback.print_exc()
+
+        except Exception as e:
+            print("An error occured: ", e)
+            traceback.print_exc()
+
+        else:
+            print("Feature extracted successfully".capitalize())
+
+        return dataset
+
+    def create_dataloader(self):
+        self.dataset = self.extract_features()
+
+        self.train_dataloader = DataLoader(
+            dataset=zip(list(self.dataset["X_train"]), list(self.dataset["y_train"])),
+            batch_size=self.batch_size,
+            shuffle=True,
+        )
+
+        self.valid_dataloader = DataLoader(
+            dataset=zip(list(self.dataset["X_test"]), list(self.dataset["y_test"])),
+            batch_size=self.batch_size * self.batch_size,
+            shuffle=True,
+        )
+
 
 if __name__ == "__main__":
     loader = Loader(image_path="./data/raw/dataset1.zip")
     # loader.unzip_folder()
-    loader.extract_features()
