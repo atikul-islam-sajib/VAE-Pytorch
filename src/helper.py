@@ -8,7 +8,7 @@ sys.path.append("src/")
 
 from mse import MSELoss
 from VAE import VariationalAutoEncoder
-from kl_diversance import KLDiversance
+from kl_divergence import KLDivergence
 from utils import load, config, CustomException
 
 
@@ -53,7 +53,7 @@ def helpers(**kwargs):
         optimizer = optim.SGD(params=model.parameters(), lr=lr, momentum=momentum)
 
     criterion = MSELoss(reduction="mean")
-    kl_diversance_loss = KLDiversance()
+    kl_diversance_loss = KLDivergence()
 
     try:
         dataloader = load_dataloader()
@@ -86,4 +86,4 @@ if __name__ == "__main__":
     assert init["optimizer"].__class__ == torch.optim.Adam
 
     assert init["criterion"].__class__ == MSELoss
-    assert init["kl_diversance_loss"].__class__ == KLDiversance
+    assert init["kl_diversance_loss"].__class__ == KLDivergence

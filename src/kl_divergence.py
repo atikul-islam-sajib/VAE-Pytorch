@@ -6,9 +6,9 @@ import torch.nn as nn
 sys.path.append("src/")
 
 
-class KLDiversance(nn.Module):
+class KLDivergence(nn.Module):
     def __init__(self, name="KLDiversance"):
-        super(KLDiversance, self).__init__()
+        super(KLDivergence, self).__init__()
 
         self.name = name
 
@@ -29,6 +29,6 @@ if __name__ == "__main__":
     mean = torch.randn(1, 64, 64, 64)
     log_variance = torch.randn(1, 64, 64, 64)
 
-    loss = KLDiversance()
+    loss = KLDivergence()
 
     assert type(loss(mean, log_variance)) == torch.Tensor
