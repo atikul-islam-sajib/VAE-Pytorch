@@ -2,3 +2,10 @@ path:
   RAW_DATA_PATH: "./data/raw/"
   PROCESSED_DATA_PATH: "./data/processed/"
   FILES_PATH: "./artifacts/files/"
+
+dataloader:
+  image_path: "./data/raw/dataset.zip"
+  channels: 3
+  image_size: 224
+  batch_size: 32
+  split_size: 0.30

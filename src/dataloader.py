@@ -2,6 +2,7 @@ import os
 import cv2
 import sys
 import zipfile
+import argparse
 import traceback
 from PIL import Image
 from tqdm import tqdm
@@ -184,9 +185,53 @@ class Loader:
 
 
 if __name__ == "__main__":
-    loader = Loader(image_path="./data/raw/dataset1.zip")
+    parser = argparse.ArgumentParser(
+        description="Dataloader for Varitional Autoencoder".title()
+    )
+    parser.add_argument(
+        "--image_path",
+        type=str,
+        default=config()["dataloader"]["image_path"],
+        help="Path to the image dataset".capitalize(),
+    )
+    parser.add_argument(
+        "--channels",
+        type=int,
+        default=config()["dataloader"]["channels"],
+        help="Number of channels in the image".capitalize(),
+    )
+    parser.add_argument(
+        "--image_size",
+        type=int,
+        default=config()["dataloader"]["image_size"],
+        help="Image size".capitalize(),
+    )
+    parser.add_argument(
+        "--batch_size",
+        type=int,
+        default=config()["dataloader"]["batch_size"],
+        help="Batch size".capitalize(),
+    )
+    parser.add_argument(
+        "--split_size",
+        type=float,
+        default=config()["dataloader"]["split_size"],
+        help="Split size".capitalize(),
+    )
 
-    loader.unzip_folder()
-    loader.create_dataloader()
+    args = parser.parse_args()
 
-    Loader.plot_images()
+    if args.image_path:
+
+        loader = Loader(
+            image_path=args.image_path,
+            channels=args.channels,
+            image_size=args.image_size,
+            batch_size=args.batch_size,
+            split_size=args.split_size,
+        )
+
+        # loader.unzip_folder()
+        loader.create_dataloader()
+
+        Loader.plot_images()
