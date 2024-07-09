@@ -1,4 +1,8 @@
+import os
+import sys
 import zipfile
+
+sys.path.append("src/")
 
 
 class Loader:
