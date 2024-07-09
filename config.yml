@@ -6,10 +6,10 @@ path:
 dataloader:
   image_path: "./data/raw/dataset.zip"
   channels: 3
-  image_size: 224
+  image_size: 256
   batch_size: 4
   split_size: 0.30
 
 VAE:
-  in_channels: 3
-  out_channels: 128 # It should be like 128, 256, 512
+  channels: 3
+  image_size: 256
