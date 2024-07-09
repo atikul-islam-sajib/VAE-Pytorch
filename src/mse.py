@@ -3,6 +3,8 @@ import torch
 import argparse
 import torch.nn as nn
 
+sys.path.append("src/")
+
 
 class MSELoss(nn.Module):
     def __init__(self, reduction="mean"):
