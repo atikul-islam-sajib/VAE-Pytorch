@@ -44,6 +44,8 @@ def helpers(**kwargs):
     channels = config()["VAE"]["channels"]
     image_size = config()["VAE"]["image_size"]
 
+    assert image_size == config()["dataloader"]["image_size"]
+
     model = VariationalAutoEncoder(channels=channels, image_size=image_size)
 
     if adam:
