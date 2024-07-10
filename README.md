@@ -272,7 +272,7 @@ python src/cli.py --test
 
 You can access the MLflow experiment tracking UI hosted on DagsHub using the following link:
 
-[VAE Experiment Tracking on DagsHub](https://dagshub.com/atikul-islam-sajib/VAE-Pytorch/experiments)
+[VAE Experiment Tracking on DagsHub](https://dagshub.com/atikul-islam-sajib/VAE-Pytorch)
 
 ### Using MLflow UI Locally
 
