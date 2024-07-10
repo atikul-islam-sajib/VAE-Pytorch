@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/shahmuhammadraditrahman/Desktop/VAE-Pytorch/mlruns/575453336907714885/9aa1abdca9ff476290bdbf2a1070f7d6/artifacts
+end_time: 1720619470286
+entry_point_name: ''
+experiment_id: '575453336907714885'
+lifecycle_stage: active
+run_id: 9aa1abdca9ff476290bdbf2a1070f7d6
+run_name: handsome-panda-478
+run_uuid: 9aa1abdca9ff476290bdbf2a1070f7d6
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1720619467175
+status: 3
+tags: []
+user_id: shahmuhammadraditrahman

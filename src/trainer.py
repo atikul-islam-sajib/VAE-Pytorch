@@ -2,6 +2,7 @@ import os
 import sys
 import torch
 import mlflow
+import dagshub
 import argparse
 import warnings
 import traceback
@@ -116,6 +117,10 @@ class Trainer:
         os.getenv("MLFLOW_TRACKING_URI")
         os.getenv("MLFLOW_TRACKING_USERNAME")
         os.getenv("MLFLOW_TRACKING_PASSWORD")
+
+        dagshub.init(
+            repo_owner="atikul-islam-sajib", repo_name="VAE-Pytorch", mlflow=True
+        )
 
         mlflow.set_experiment(experiment_name="Variational Auto Encoder".title())
 
