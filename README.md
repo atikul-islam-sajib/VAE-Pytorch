@@ -262,13 +262,15 @@ To start training and logging the experiments to DagsHub, run the following comm
 
 ```bash
 python src/cli.py --train 
+python src/cli.py --test 
+
 ```
 
 ### Accessing Experiment Tracking
 
 You can access the MLflow experiment tracking UI hosted on DagsHub using the following link:
 
-[ESRGAN Experiment Tracking on DagsHub](https://dagshub.com/atikul-islam-sajib/VAE-Pytorch/experiments)
+[VAE Experiment Tracking on DagsHub](https://dagshub.com/atikul-islam-sajib/VAE-Pytorch/experiments)
 
 ### Using MLflow UI Locally
 
