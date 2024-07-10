@@ -195,12 +195,12 @@ class Trainer:
         y = y.to(self.device)
 
         predicted, _, _ = self.model(X)
-        if epoch % 100 == 0:
+        if epoch % (self.epochs // 20) == 0:
             save_image(
                 predicted,
                 os.path.join(
                     config()["path"]["TRAIN_IMAGES_PATH"],
-                    "train_image{}.png".format(epoch + 1),
+                    "train_image{}.png".format(epoch),
                 ),
             )
 
