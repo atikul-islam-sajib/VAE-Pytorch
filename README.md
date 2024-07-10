@@ -32,50 +32,50 @@ Follow these steps to get the project set up on your local machine:
 
 ## Project Structure
 ```
-    .
-    ├── Dockerfile
-    ├── LICENSE
-    ├── README.md
-    ├── VAE_Pytorch.egg-info/
-    │   ├── PKG-INFO
-    │   ├── SOURCES.txt
-    │   ├── dependency_links.txt
-    │   ├── requires.txt
-    │   └── top_level.txt
-    ├── artifacts/
-    │   ├── checkpoints/
-    │   ├── files/
-    │   ├── metrics/
-    │   └── outputs/
-    ├── config.yml
-    ├── data/
-    │   ├── processed/
-    │   └── raw/
-    ├── dvc.lock
-    ├── dvc.yaml
-    ├── logs/
-    ├── mlruns/
-    ├── mypy.ini
-    ├── requirements.txt
-    ├── research/
-    │   ├── files/
-    │   └── notebooks/
-    ├── setup.py
-    ├── src/
-    │   ├── VAE.py
-    │   ├── __init__.py
-    │   ├── cli.py
-    │   ├── dataloader.py
-    │   ├── decoder.py
-    │   ├── encoder.py
-    │   ├── helper.py
-    │   ├── kl_divergence.py
-    │   ├── mse.py
-    │   ├── tester.py
-    │   ├── trainer.py
-    │   └── utils.py
-    └── unittest/
-        └── test.py
+.
+├── Dockerfile
+├── LICENSE
+├── README.md
+├── VAE_Pytorch.egg-info/
+│   ├── PKG-INFO
+│   ├── SOURCES.txt
+│   ├── dependency_links.txt
+│   ├── requires.txt
+│   └── top_level.txt
+├── artifacts/
+│   ├── checkpoints/
+│   ├── files/
+│   ├── metrics/
+│   └── outputs/
+├── config.yml
+├── data/
+│   ├── processed/
+│   └── raw/
+├── dvc.lock
+├── dvc.yaml
+├── logs/
+├── mlruns/
+├── mypy.ini
+├── requirements.txt
+├── research/
+│   ├── files/
+│   └── notebooks/
+├── setup.py
+├── src/
+│   ├── VAE.py
+│   ├── __init__.py
+│   ├── cli.py
+│   ├── dataloader.py
+│   ├── decoder.py
+│   ├── encoder.py
+│   ├── helper.py
+│   ├── kl_divergence.py
+│   ├── mse.py
+│   ├── tester.py
+│   ├── trainer.py
+│   └── utils.py
+└── unittest/
+    └── test.py
 
 ```
 
