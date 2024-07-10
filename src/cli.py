@@ -28,6 +28,12 @@ def cli():
         help="Number of channels in the image".capitalize(),
     )
     parser.add_argument(
+        "--image_size",
+        type=int,
+        default=config()["dataloader"]["image_size"],
+        help="Image size".capitalize(),
+    )
+    parser.add_argument(
         "--batch_size",
         type=int,
         default=config()["dataloader"]["batch_size"],

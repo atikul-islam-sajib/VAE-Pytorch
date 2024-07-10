@@ -1,0 +1,31 @@
+stages:
+  model_train:
+    cmd: python src/cli.py --train
+
+    deps:
+      - src/cli.py
+      - src/dataloader.py
+      - src/encoder.py
+      - src/decoder.py
+      - src/utils.py
+      - src/helper.py
+      - src/mse.py
+      - src/kl_divergence.py
+      - src/VAE.py
+      - src/trainer.py
+      - ./data/
+
+    # outs:
+    #   - ./artifacts/:
+    #     persist: true
+      
+  model_test:
+    cmd: python src/cli.py --test
+
+    deps:
+      - src/cli.py
+      - src/tester.py
+
+    # outs:
+    #   - ./artifacts/:
+    #     persist: true

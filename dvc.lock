@@ -1,0 +1,61 @@
+schema: '2.0'
+stages:
+  model_train:
+    cmd: python src/cli.py --train
+    deps:
+    - path: ./data/
+      hash: md5
+      md5: d22aa20430d6c1f104376a0e858adc80.dir
+      size: 89037253
+      nfiles: 109
+    - path: src/VAE.py
+      hash: md5
+      md5: 7b712fc98f3de8a9ee32e5d788903690
+      size: 4977
+    - path: src/cli.py
+      hash: md5
+      md5: 238360480825dc7887ce7fd99c3e111b
+      size: 5777
+    - path: src/dataloader.py
+      hash: md5
+      md5: fd97fd96d131b75b11fc471cf568d40d
+      size: 9182
+    - path: src/decoder.py
+      hash: md5
+      md5: a19e3fc16a07ce811d923af0b55f0f2d
+      size: 1990
+    - path: src/encoder.py
+      hash: md5
+      md5: 3938333eca5116204476f781ae9fb6af
+      size: 1910
+    - path: src/helper.py
+      hash: md5
+      md5: 067eaa70b9723b260b71eb13e4715497
+      size: 2604
+    - path: src/kl_divergence.py
+      hash: md5
+      md5: 97a6ecd3b5516848434510d835b2f14a
+      size: 948
+    - path: src/mse.py
+      hash: md5
+      md5: 56868a1c1d737a84ca2491bef6eb7e84
+      size: 998
+    - path: src/trainer.py
+      hash: md5
+      md5: 88e64a1b16166aae42cc8099ebb83b0c
+      size: 14777
+    - path: src/utils.py
+      hash: md5
+      md5: 9974284da03c8d38a77bcba47a20d3fb
+      size: 1088
+  model_test:
+    cmd: python src/cli.py --test
+    deps:
+    - path: src/cli.py
+      hash: md5
+      md5: 238360480825dc7887ce7fd99c3e111b
+      size: 5777
+    - path: src/tester.py
+      hash: md5
+      md5: d12164ba804fc52573cc9eb874800993
+      size: 3323
