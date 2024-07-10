@@ -10,6 +10,8 @@ from dataloader import Loader
 from encoder import EncoderBlock
 from decoder import DecoderBlock
 from VAE import VariationalAutoEncoder
+from mse import MSELoss
+from kl_divergence import KLDivergence
 from helper import helpers
 from utils import load, config
 
@@ -92,6 +94,15 @@ class UnitTest(unittest.TestCase):
         self.assertEqual(
             self.model(torch.randn(1, 3, 256, 256)).size(), torch.Size([1, 3, 256, 256])
         )
+        self.assertIsInstance(self.model, VariationalAutoEncoder)
+
+    def test_loss(self):
+        self.init = helpers(
+            adam=True, SGD=False, lr=0.001, beta1=0.9, beta2=0.999, momentum=0.9
+        )
+
+        self.assertEqual(self.init["criterion"].__class__, MSELoss)
+        self.assertEqual(self.init["kl_diversance_loss"].__class__, KLDivergence)
 
 
 if __name__ == "__main__":
