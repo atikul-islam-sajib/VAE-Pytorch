@@ -86,6 +86,13 @@ class UnitTest(unittest.TestCase):
             model(torch.randn(1, 64, 64, 64)).size(), torch.Size([1, 3, 256, 256])
         )
 
+    def test_VAE(self):
+        self.model = VariationalAutoEncoder()
+
+        self.assertEqual(
+            self.model(torch.randn(1, 3, 256, 256)).size(), torch.Size([1, 3, 256, 256])
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
