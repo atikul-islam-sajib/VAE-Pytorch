@@ -283,8 +283,8 @@ class Trainer:
                     print("An error occured: {}".format(e))
                     traceback.print_exc()
 
-                # self.history["train_loss"].extend(np.mean(self.train_loss))
-                # self.history["valid_loss"].extend(np.mean(self.valid_loss))
+                self.history["train_loss"].append(np.mean(self.train_loss))
+                self.history["valid_loss"].append(np.mean(self.valid_loss))
 
                 mlflow.log_params(
                     {
@@ -315,6 +315,13 @@ class Trainer:
                 )
 
             mlflow.pytorch.log_model(self.model, "model")
+
+            dump(
+                value=self.history,
+                filename=os.path.join(
+                    config()["path"]["TRAIN_HISTORY_PATH"], "history.pkl"
+                ),
+            )
 
         print(
             "Train image saved in the path {}".format(

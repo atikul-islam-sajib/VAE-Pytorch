@@ -5,7 +5,8 @@ path:
   TRAIN_MODELS: "./artifacts/checkpoints/train_models/"
   TEST_MODELS: "./artifacts/checkpoints/best_model/"
   TRAIN_IMAGES_PATH: "./artifacts/outputs/train_images/"
-  VALID_IMAGES_PATH: ".//artifacts/outputs/test_image/"
+  VALID_IMAGES_PATH: "./artifacts/outputs/test_image/"
+  TRAIN_HISTORY_PATH: "./artifacts/metrics/"
 
 dataloader:
   image_path: "./data/raw/dataset.zip"
@@ -19,7 +20,7 @@ VAE:
   image_size: 256
 
 trainer:
-  epochs: 2        # 2000
+  epochs: 2      
   lr: 0.002
   weight_decay: 0.0001
   beta1: 0.5
