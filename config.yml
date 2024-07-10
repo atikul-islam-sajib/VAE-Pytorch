@@ -37,3 +37,7 @@ trainer:
   l1_regularization: False
   l2_regularization: False
   MLFlow: True
+
+tester:
+  model: "best" 
+  device: "mps"

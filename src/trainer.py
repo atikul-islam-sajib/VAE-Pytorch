@@ -226,7 +226,7 @@ class Trainer:
             torch.save(
                 self.model.state_dict(),
                 os.path.join(
-                    config()["path"]["TEST_MODELS"], "model{}.pth".format(epoch)
+                    config()["path"]["TRAIN_MODELS"], "model{}.pth".format(epoch)
                 ),
             )
 
