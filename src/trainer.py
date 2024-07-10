@@ -222,10 +222,13 @@ class Trainer:
                 os.path.join(config()["path"]["TEST_MODELS"], "best_model.pth"),
             )
 
-        torch.save(
-            self.model.state_dict(),
-            os.path.join(config()["path"]["TEST_MODELS"], "model{}.pth".format(epoch)),
-        )
+        if epoch % (self.epochs // 20) == 0:
+            torch.save(
+                self.model.state_dict(),
+                os.path.join(
+                    config()["path"]["TEST_MODELS"], "model{}.pth".format(epoch)
+                ),
+            )
 
     def train(self):
         with mlflow.start_run(
