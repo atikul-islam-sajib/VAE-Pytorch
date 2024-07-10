@@ -54,7 +54,7 @@ def helpers(**kwargs):
     if SGD:
         optimizer = optim.SGD(params=model.parameters(), lr=lr, momentum=momentum)
 
-    criterion = MSELoss(reduction="mean")
+    criterion = MSELoss(reduction="sum")
     kl_diversance_loss = KLDivergence()
 
     try:

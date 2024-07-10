@@ -14,7 +14,7 @@ class MSELoss(nn.Module):
 
     def forward(self, pred, actual):
         if isinstance(pred, torch.Tensor) and isinstance(actual, torch.Tensor):
-            self.loss = nn.MSELoss(reduction=self.reduction)
+            self.loss = nn.BCELoss(reduction=self.reduction)
             return self.loss(pred, actual)
 
         else:

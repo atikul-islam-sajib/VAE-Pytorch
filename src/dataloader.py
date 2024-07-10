@@ -84,6 +84,10 @@ class Loader:
                 self.imageX = cv2.imread(filename=self.imageX, flags=cv2.IMREAD_COLOR)
                 self.imagey = cv2.imread(filename=self.imagey, flags=cv2.IMREAD_COLOR)
 
+                if self.imageX is None or self.imagey is None:
+                    print(f"Failed to load image {image}")
+                    continue
+
                 self.imageX = cv2.cvtColor(self.imageX, cv2.COLOR_BGR2RGB)
                 self.imagey = cv2.cvtColor(self.imagey, cv2.COLOR_BGR2RGB)
 

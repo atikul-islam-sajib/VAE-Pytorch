@@ -74,7 +74,7 @@ class VariationalAutoEncoder(nn.Module):
                     stride=self.stride_size + 1,
                     padding=self.padding_size,
                 ),
-                nn.Tanh(),
+                nn.Sigmoid(),
             )
         )
 
@@ -83,7 +83,7 @@ class VariationalAutoEncoder(nn.Module):
     def reparameterization_trick(self, mean, log_variance):
         if isinstance(mean, torch.Tensor) and isinstance(log_variance, torch.Tensor):
             standard_deviation = torch.exp(0.5 * log_variance)
-            eps = torch.randn((standard_deviation.size()))
+            eps = torch.randn_like(standard_deviation)
 
             z = mean + eps * standard_deviation
 
