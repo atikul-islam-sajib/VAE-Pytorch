@@ -155,6 +155,16 @@ strict digraph model {
                     CELLSPACING="0" CELLPADDING="4">
                         <TR><TD>output-tensor<BR/>depth:0</TD><TD>(1, 3, 256, 256)</TD></TR>
                     </TABLE>> fillcolor=lightyellow]
+	13 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                        <TR><TD>output-tensor<BR/>depth:0</TD><TD>(1, 64, 64, 64)</TD></TR>
+                    </TABLE>> fillcolor=lightyellow]
+	14 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                        <TR><TD>output-tensor<BR/>depth:0</TD><TD>(1, 64, 64, 64)</TD></TR>
+                    </TABLE>> fillcolor=lightyellow]
 	0 -> 1
 	1 -> 2
 	2 -> 3
@@ -168,4 +178,6 @@ strict digraph model {
 	9 -> 10
 	10 -> 11
 	11 -> 12
+	3 -> 13
+	4 -> 14
 }

@@ -107,7 +107,7 @@ class VariationalAutoEncoder(nn.Module):
 
             decoder = self.decoder(z)
 
-            return decoder
+            return decoder, mean, log_variance
 
         else:
             raise Exception("Input must be a tensor".capitalize())
@@ -144,7 +144,9 @@ if __name__ == "__main__":
         channels=args.channels, image_size=args.image_size
     )
 
-    assert variational_autoencoder(torch.randn(1, 3, 256, 256)).size() == (
+    predicted, _, _ = variational_autoencoder(torch.randn(1, 3, 256, 256))
+
+    assert predicted.size() == (
         1,
         args.channels,
         args.image_size,
