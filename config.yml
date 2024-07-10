@@ -3,7 +3,7 @@ path:
   PROCESSED_DATA_PATH: "./data/processed/"
   FILES_PATH: "./artifacts/files/"
   TRAIN_MODELS: "./artifacts/checkpoints/train_models/"
-  TEST_MODELS: "./artifacts/checkpoints/test_models/"
+  TEST_MODELS: "./artifacts/checkpoints/best_model/"
   TRAIN_IMAGES_PATH: "./artifacts/outputs/train_images/"
   VALID_IMAGES_PATH: ".//artifacts/outputs/test_image/"
 
@@ -19,7 +19,7 @@ VAE:
   image_size: 256
 
 trainer:
-  epochs: 2000
+  epochs: 2        # 2000
   lr: 0.002
   weight_decay: 0.0001
   beta1: 0.5
@@ -29,7 +29,7 @@ trainer:
   gamma: 0.85
   adam: True
   SGD: False
-  device: "cuda"
+  device: "mps"
   verbose: True
   lr_scheduler: False
   weight_init: False

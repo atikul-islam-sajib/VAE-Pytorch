@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/shahmuhammadraditrahman/Desktop/VAE-Pytorch/mlruns/575453336907714885/e8b2d81c48cd4bf6ae1ae5588bf5cbbf/artifacts
+end_time: 1720619055502
+entry_point_name: ''
+experiment_id: '575453336907714885'
+lifecycle_stage: active
+run_id: e8b2d81c48cd4bf6ae1ae5588bf5cbbf
+run_name: rebellious-cat-84
+run_uuid: e8b2d81c48cd4bf6ae1ae5588bf5cbbf
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1720619052664
+status: 3
+tags: []
+user_id: shahmuhammadraditrahman

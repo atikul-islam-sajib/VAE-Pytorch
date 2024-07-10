@@ -3,6 +3,7 @@ import sys
 import torch
 import mlflow
 import argparse
+import warnings
 import traceback
 import numpy as np
 from tqdm import tqdm
@@ -12,6 +13,8 @@ from torch.optim.lr_scheduler import StepLR
 from torchvision.utils import save_image
 
 load_dotenv()
+
+warnings.filterwarnings("ignore")
 
 sys.path.append("src/")
 
@@ -220,7 +223,9 @@ class Trainer:
         )
 
     def train(self):
-        with mlflow.start_run() as run:
+        with mlflow.start_run(
+            description="In machine learning, a variational autoencoder is an artificial neural network architecture introduced by Diederik P. Kingma and Max Welling. It belongs to the family of probabilistic graphical models and variational Bayesian methods."
+        ) as run:
             for epoch in tqdm(range(self.epochs)):
                 self.train_loss = []
                 self.valid_loss = []
@@ -273,8 +278,8 @@ class Trainer:
                     print("An error occured: {}".format(e))
                     traceback.print_exc()
 
-                self.history["train_loss"].extend(np.mean(self.train_loss))
-                self.history["valid_loss"].extend(np.mean(self.valid_loss))
+                # self.history["train_loss"].extend(np.mean(self.train_loss))
+                # self.history["valid_loss"].extend(np.mean(self.valid_loss))
 
                 mlflow.log_params(
                     {
@@ -304,7 +309,7 @@ class Trainer:
                     key="valid_loss", value=np.mean(self.valid_loss), step=epoch + 1
                 )
 
-            mlflow.pytorch.log_model("model", self.model)
+            mlflow.pytorch.log_model(self.model, "model")
 
         print(
             "Train image saved in the path {}".format(

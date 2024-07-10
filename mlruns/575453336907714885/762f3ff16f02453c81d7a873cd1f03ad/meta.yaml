@@ -1,0 +1,16 @@
+artifact_uri: file:///Users/shahmuhammadraditrahman/Desktop/VAE-Pytorch/mlruns/575453336907714885/762f3ff16f02453c81d7a873cd1f03ad/artifacts
+deleted_time: 1720619093538
+end_time: 1720618983669
+entry_point_name: ''
+experiment_id: '575453336907714885'
+lifecycle_stage: deleted
+run_id: 762f3ff16f02453c81d7a873cd1f03ad
+run_name: likeable-sponge-806
+run_uuid: 762f3ff16f02453c81d7a873cd1f03ad
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1720618980720
+status: 3
+tags: []
+user_id: shahmuhammadraditrahman

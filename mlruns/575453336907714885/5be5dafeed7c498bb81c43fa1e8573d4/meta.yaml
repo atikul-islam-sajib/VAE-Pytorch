@@ -1,0 +1,16 @@
+artifact_uri: file:///Users/shahmuhammadraditrahman/Desktop/VAE-Pytorch/mlruns/575453336907714885/5be5dafeed7c498bb81c43fa1e8573d4/artifacts
+deleted_time: 1720619093538
+end_time: 1720618800302
+entry_point_name: ''
+experiment_id: '575453336907714885'
+lifecycle_stage: deleted
+run_id: 5be5dafeed7c498bb81c43fa1e8573d4
+run_name: welcoming-fowl-399
+run_uuid: 5be5dafeed7c498bb81c43fa1e8573d4
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1720618799601
+status: 4
+tags: []
+user_id: shahmuhammadraditrahman

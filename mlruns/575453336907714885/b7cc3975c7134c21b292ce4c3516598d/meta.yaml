@@ -1,0 +1,16 @@
+artifact_uri: file:///Users/shahmuhammadraditrahman/Desktop/VAE-Pytorch/mlruns/575453336907714885/b7cc3975c7134c21b292ce4c3516598d/artifacts
+deleted_time: 1720619093538
+end_time: 1720618856523
+entry_point_name: ''
+experiment_id: '575453336907714885'
+lifecycle_stage: deleted
+run_id: b7cc3975c7134c21b292ce4c3516598d
+run_name: capricious-panda-356
+run_uuid: b7cc3975c7134c21b292ce4c3516598d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1720618855275
+status: 4
+tags: []
+user_id: shahmuhammadraditrahman
