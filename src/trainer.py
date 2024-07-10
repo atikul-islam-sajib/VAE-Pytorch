@@ -1,18 +1,23 @@
 import os
 import sys
 import torch
+import mlflow
 import argparse
 import traceback
 import numpy as np
 from tqdm import tqdm
+from dotenv import load_dotenv
+from dagshub import dagshub_logger
 from torch.optim.lr_scheduler import StepLR
 from torchvision.utils import save_image
 
+load_dotenv()
+
 sys.path.append("src/")
 
+from mse import MSELoss
 from helper import helpers
 from VAE import VariationalAutoEncoder
-from mse import MSELoss
 from kl_divergence import KLDivergence
 from utils import dump, load, config, weight_init, device_init, CustomException
 
@@ -104,6 +109,12 @@ class Trainer:
 
         self.loss = float("inf")
         self.history = {"train_loss": [], "valid_loss": []}
+
+        os.getenv("MLFLOW_TRACKING_URI")
+        os.getenv("MLFLOW_TRACKING_USERNAME")
+        os.getenv("MLFLOW_TRACKING_PASSWORD")
+
+        mlflow.set_experiment(experiment_name="Variational Auto Encoder".title())
 
     def l1_regularization_loss(self, model):
         if isinstance(model, VariationalAutoEncoder):
@@ -209,134 +220,208 @@ class Trainer:
         )
 
     def train(self):
-        for epoch in tqdm(range(self.epochs)):
-            self.train_loss = []
-            self.valid_loss = []
+        with mlflow.start_run() as run:
+            for epoch in tqdm(range(self.epochs)):
+                self.train_loss = []
+                self.valid_loss = []
 
-            for _, (X, y) in enumerate(self.train_dataloader):
-                X = X.to(self.device)
-                y = y.to(self.device)
+                for _, (X, y) in enumerate(self.train_dataloader):
+                    X = X.to(self.device)
+                    y = y.to(self.device)
 
-                self.train_loss.append(self.update_model_loss(X=X, y=y))
+                    self.train_loss.append(self.update_model_loss(X=X, y=y))
 
-            for _, (X, y) in enumerate(self.valid_dataloader):
-                X = X.to(self.device)
-                y = y.to(self.device)
+                for _, (X, y) in enumerate(self.valid_dataloader):
+                    X = X.to(self.device)
+                    y = y.to(self.device)
 
-                predicted, mean, log_variance = self.model(X)
+                    predicted, mean, log_variance = self.model(X)
 
-                predicted_loss = self.criterion(predicted, y)
-                kl_divergence_loss = self.kl_divergence_loss(mean, log_variance)
+                    predicted_loss = self.criterion(predicted, y)
+                    kl_divergence_loss = self.kl_divergence_loss(mean, log_variance)
 
-                total_loss = predicted_loss + kl_divergence_loss
+                    total_loss = predicted_loss + kl_divergence_loss
 
-                self.valid_loss.append(total_loss.item())
+                    self.valid_loss.append(total_loss.item())
 
-            try:
-                self.show_progress(
-                    epoch=epoch + 1,
-                    train_loss=np.mean(self.train_loss),
-                    valid_loss=np.mean(self.valid_loss),
+                if self.lr_scheduler:
+                    self.scheduler.step()
+
+                try:
+                    self.show_progress(
+                        epoch=epoch + 1,
+                        train_loss=np.mean(self.train_loss),
+                        valid_loss=np.mean(self.valid_loss),
+                    )
+                except Exception as e:
+                    print("An error occured: {}".format(e))
+                    traceback.print_exc()
+
+                try:
+                    self.save_images(epoch=epoch + 1)
+                except Exception as e:
+                    print("An error occured: {}".format(e))
+                    traceback.print_exc()
+
+                try:
+                    self.saved_checkpoints(
+                        epoch=epoch + 1,
+                        train_loss=np.mean(self.train_loss),
+                        valid_loss=np.mean(self.valid_loss),
+                    )
+                except Exception as e:
+                    print("An error occured: {}".format(e))
+                    traceback.print_exc()
+
+                self.history["train_loss"].extend(np.mean(self.train_loss))
+                self.history["valid_loss"].extend(np.mean(self.valid_loss))
+
+                mlflow.log_params(
+                    {
+                        "epochs": self.epochs,
+                        "lr": self.lr,
+                        "beta1": self.beta1,
+                        "beta2": self.beta2,
+                        "momentum": self.momentum,
+                        "weight_decay": self.weight_decay,
+                        "step_size": self.step_size,
+                        "gamma": self.gamma,
+                        "adam": self.adam,
+                        "SGD": self.SGD,
+                        "device": self.device,
+                        "lr_scheduler": self.lr_scheduler,
+                        "weight_init": self.weight_init,
+                        "l1_regularization": self.l1_regularization,
+                        "l2_regularization": self.l2_regularization,
+                        "verbose": self.verbose,
+                    }
                 )
-            except Exception as e:
-                print("An error occured: {}".format(e))
-                traceback.print_exc()
 
-            try:
-                self.save_images(epoch=epoch + 1)
-            except Exception as e:
-                print("An error occured: {}".format(e))
-                traceback.print_exc()
-
-            try:
-                self.saved_checkpoints(
-                    epoch=epoch + 1,
-                    train_loss=np.mean(self.train_loss),
-                    valid_loss=np.mean(self.valid_loss),
+                mlflow.log_metric(
+                    key="train_loss", value=np.mean(self.train_loss), step=epoch + 1
                 )
-            except Exception as e:
-                print("An error occured: {}".format(e))
-                traceback.print_exc()
+                mlflow.log_metric(
+                    key="valid_loss", value=np.mean(self.valid_loss), step=epoch + 1
+                )
 
-            self.history["train_loss"].extend(np.mean(self.train_loss))
-            self.history["valid_loss"].extend(np.mean(self.valid_loss))
+            mlflow.pytorch.log_model("model", self.model)
+
+        print(
+            "Train image saved in the path {}".format(
+                config()["path"]["TRAIN_IMAGES_PATH"]
+            )
+        )
+        print(
+            "Train and best models saved in the path {} and {}".format(
+                config()["path"]["TRAIN_MODELS"], config()["path"]["TEST_MODELS"]
+            )
+        )
+        print("To visualize the MLFlow user-interface, run the command: mlflow ui")
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train the model for VAE".title())
     parser.add_argument(
-        "--epochs", type=int, default=2000, help="Number of epochs".capitalize()
+        "--epochs",
+        type=int,
+        default=config()["trainer"]["epochs"],
+        help="Number of epochs".capitalize(),
     )
     parser.add_argument(
-        "--lr", type=float, default=0.002, help="Learning rate".capitalize()
+        "--lr",
+        type=float,
+        default=config()["trainer"]["lr"],
+        help="Learning rate".capitalize(),
     )
     parser.add_argument(
-        "--beta1", type=float, default=0.9, help="Beta1 for Adam optimizer".capitalize()
+        "--beta1",
+        type=float,
+        default=config()["trainer"]["beta1"],
+        help="Beta1 for Adam optimizer".capitalize(),
     )
     parser.add_argument(
         "--beta2",
         type=float,
-        default=0.999,
+        default=config()["trainer"]["beta2"],
         help="Beta2 for Adam optimizer".capitalize(),
     )
     parser.add_argument(
         "--momentum",
         type=float,
-        default=0.9,
+        default=config()["trainer"]["momentum"],
         help="Momentum for SGD optimizer".capitalize(),
     )
     parser.add_argument(
         "--weight_decay",
         type=float,
-        default=0.0001,
+        default=config()["trainer"]["weight_decay"],
         help="Weight decay for SGD optimizer".capitalize(),
     )
     parser.add_argument(
         "--step_size",
         type=int,
-        default=10,
+        default=config()["trainer"]["step_size"],
         help="Step size for learning rate scheduler".capitalize(),
     )
     parser.add_argument(
         "--gamma",
         type=float,
-        default=0.85,
+        default=config()["trainer"]["gamma"],
         help="Gamma for learning rate scheduler".capitalize(),
     )
     parser.add_argument(
-        "--adam", action="store_true", help="Use Adam optimizer".capitalize()
+        "--adam",
+        type=bool,
+        default=config()["trainer"]["adam"],
+        help="Use Adam optimizer".capitalize(),
     )
     parser.add_argument(
-        "--SGD", action="store_true", help="Use SGD optimizer".capitalize()
+        "--SGD",
+        type=bool,
+        default=config()["trainer"]["SGD"],
+        help="Use SGD optimizer".capitalize(),
     )
     parser.add_argument(
-        "--device", type=str, default="mps", help="Device to use".capitalize()
+        "--device",
+        type=str,
+        default=config()["trainer"]["device"],
+        help="Device to use".capitalize(),
     )
     parser.add_argument(
-        "--verbose", action="store_true", help="Verbose mode".capitalize()
+        "--verbose",
+        type=bool,
+        default=config()["trainer"]["verbose"],
+        help="Verbose mode".capitalize(),
     )
     parser.add_argument(
         "--lr_scheduler",
-        action="store_true",
+        type=bool,
+        default=config()["trainer"]["lr_scheduler"],
         help="Use learning rate scheduler".capitalize(),
     )
     parser.add_argument(
         "--weight_init",
-        action="store_true",
+        type=bool,
+        default=config()["trainer"]["weight_init"],
         help="Use weight initialization".capitalize(),
     )
     parser.add_argument(
         "--l1_regularization",
-        action="store_true",
+        type=bool,
+        default=config()["trainer"]["l1_regularization"],
         help="Use L1 regularization".capitalize(),
     )
     parser.add_argument(
         "--l2_regularization",
-        action="store_true",
+        type=bool,
+        default=config()["trainer"]["l2_regularization"],
         help="Use L2 regularization".capitalize(),
     )
     parser.add_argument(
-        "--MLFlow", action="store_true", help="Use MLFlow for tracking".capitalize()
+        "--MLFlow",
+        type=bool,
+        default=config()["trainer"]["MLFlow"],
+        help="Use MLFlow for tracking".capitalize(),
     )
 
     args = parser.parse_args()
