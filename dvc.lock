@@ -5,7 +5,7 @@ stages:
     deps:
     - path: ./data/
       hash: md5
-      md5: d22aa20430d6c1f104376a0e858adc80.dir
+      md5: f8bae1d660d3ad0b850f11228f7e704c.dir
       size: 89037253
       nfiles: 109
     - path: src/VAE.py
