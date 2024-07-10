@@ -35,6 +35,12 @@ class UnitTest(unittest.TestCase):
             self.valid_dataloader.__class__, torch.utils.data.dataloader.DataLoader
         )
 
+    def test_quantity_train_dataloader(self):
+        self.assertEqual(sum(X.size(0) for X, _ in self.train_dataloader), 12)
+
+    def test_quantity_valid_dataloader(self):
+        self.assertEqual(sum(X.size(0) for X, _ in self.valid_dataloader), 6)
+
 
 if __name__ == "__main__":
     unittest.main()
