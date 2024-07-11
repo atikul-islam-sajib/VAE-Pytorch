@@ -230,7 +230,10 @@ trainer.train()
 
 #### Testing the Model
 ```python
-tester = Tester(device="cuda", model="best") # use mps, cpu
+tester = Tester(
+    device="cuda",            # Specify the device to test the model
+    model_path="best"         # Define the model, see the checkpoints->train_models if used
+)
 test.test()
 ```
 
