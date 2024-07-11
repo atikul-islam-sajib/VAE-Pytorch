@@ -36,12 +36,6 @@ Follow these steps to get the project set up on your local machine:
 ├── Dockerfile
 ├── LICENSE
 ├── README.md
-├── VAE_Pytorch.egg-info/
-│   ├── PKG-INFO
-│   ├── SOURCES.txt
-│   ├── dependency_links.txt
-│   ├── requires.txt
-│   └── top_level.txt
 ├── artifacts/
 │   ├── checkpoints/
 │   ├── files/
@@ -129,7 +123,7 @@ The project is controlled via a command line interface (CLI) which allows for ru
 | `--epochs`        | Number of training epochs                    | int    | 100     |
 | `--lr`            | Learning rate                                | float  | 0.0002  |
 | `--lr_scheduler`| Enable learning rate scheduler              | bool   | False   |
-| `--is_weight_init`| Apply weight initialization                  | bool   | False   |
+| `--weight_init`| Apply weight initialization                  | bool   | False   |
 | `--device`        | Computation device ('cuda', 'mps', 'cpu')    | str    | 'mps'   |
 | `--adam`          | Use Adam optimizer                           | bool   | True    |
 | `--SGD`           | Use Stochastic Gradient Descent optimizer    | bool   | False   |
