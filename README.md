@@ -104,7 +104,7 @@ For detailed documentation on the implementation and usage, visit the -> [VAE No
 
 ### User Guide Notebook - Custom Modules
 
-For detailed documentation on the implementation and usage, visit the -> [VAE Notebook - CM](https://github.com/atikul-islam-sajib/VAE-Pytorch/blob/main/research/notebooks/ModelTrain-CM.ipynb).
+For detailed documentation on the implementation and usage, visit the -> [VAE Notebook - CM](https://github.com/atikul-islam-sajib/VAE-Pytorch/blob/main/research/notebooks/ModelTrain_CM.ipynb).
 
 ## Data Versioning with DVC
 To ensure you have the correct version of the dataset and model artifacts.
