@@ -114,13 +114,13 @@ class Trainer:
         self.loss = float("inf")
         self.history = {"train_loss": [], "valid_loss": []}
 
-        os.getenv("MLFLOW_TRACKING_URI")
-        os.getenv("MLFLOW_TRACKING_USERNAME")
-        os.getenv("MLFLOW_TRACKING_PASSWORD")
+        # os.getenv("MLFLOW_TRACKING_URI")
+        # os.getenv("MLFLOW_TRACKING_USERNAME")                '''Use your tracking URI, username, password for tracking the model'''
+        # os.getenv("MLFLOW_TRACKING_PASSWORD")
 
-        dagshub.init(
-            repo_owner="atikul-islam-sajib", repo_name="VAE-Pytorch", mlflow=True
-        )
+        # dagshub.init(
+        #     repo_owner="atikul-islam-sajib", repo_name="VAE-Pytorch", mlflow=True
+        # )
 
         mlflow.set_experiment(experiment_name="Variational Auto Encoder".title())
 
