@@ -100,7 +100,7 @@ dataset/
 
 ### User Guide Notebook - CLI
 
-For detailed documentation on the implementation and usage, visit the -> [VAE Notebook - CLI](https://github.com/atikul-islam-sajib/VAE-Pytorch/blob/main/research/notebooks/ModelTrain-CLI.ipynb).
+For detailed documentation on the implementation and usage, visit the -> [VAE Notebook - CLI](https://github.com/atikul-islam-sajib/VAE-Pytorch/blob/main/research/notebooks/ModelTrain_CLI.ipynb).
 
 ### User Guide Notebook - Custom Modules
 
