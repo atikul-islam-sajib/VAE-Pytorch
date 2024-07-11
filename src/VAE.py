@@ -74,7 +74,7 @@ class VariationalAutoEncoder(nn.Module):
                     stride=self.stride_size + 1,
                     padding=self.padding_size,
                 ),
-                nn.Sigmoid(),
+                nn.Tanh(),   # You can use "Sigmoid() when use BCELoss() instead of MSELoss()" 
             )
         )
 
