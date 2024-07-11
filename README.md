@@ -149,48 +149,48 @@ Here is the table with the MPS commands removed:
    Update the `config.yml` file with the appropriate paths and settings. An example `config.yml`:
    ```yaml
 path:
-    RAW_DATA_PATH: "./data/raw/" # Path to the raw data
-    PROCESSED_DATA_PATH: "./data/processed/" # Path to the processed data
-    FILES_PATH: "./artifacts/files/" # Path to the files
-    TRAIN_MODELS: "./artifacts/checkpoints/train_models/" # Path to the trained models
-    TEST_MODELS: "./artifacts/checkpoints/best_model/" # Path to the best model
-    TRAIN_IMAGES_PATH: "./artifacts/outputs/train_images/" # Path to the training images
-    VALID_IMAGES_PATH: "./artifacts/outputs/test_image/" # Path to the validation images
-    TRAIN_HISTORY_PATH: "./artifacts/metrics/" # Path to the training history and metrics
+    RAW_DATA_PATH: "./data/raw/"                                 # Path to the raw data
+    PROCESSED_DATA_PATH: "./data/processed/"                     # Path to the processed data
+    FILES_PATH: "./artifacts/files/"                             # Path to the files
+    TRAIN_MODELS: "./artifacts/checkpoints/train_models/"        # Path to the trained models
+    TEST_MODELS: "./artifacts/checkpoints/best_model/"           # Path to the best model
+    TRAIN_IMAGES_PATH: "./artifacts/outputs/train_images/"       # Path to the training images
+    VALID_IMAGES_PATH: "./artifacts/outputs/test_image/"         # Path to the validation images
+    TRAIN_HISTORY_PATH: "./artifacts/metrics/"                   # Path to the training history and metrics
 
 dataloader:
-    image_path: "./data/raw/dataset.zip" # Path to the dataset zip file
-    channels: 3 # Number of image channels (e.g., RGB)
-    image_size: 256 # Size to which images will be resized
-    batch_size: 4 # Batch size for training
-    split_size: 0.30 # Proportion of data used for validation
+    image_path: "./data/raw/dataset.zip"                         # Path to the dataset zip file
+    channels: 3                                                  # Number of image channels (e.g., RGB)
+    image_size: 256                                              # Size to which images will be resized
+    batch_size: 4                                                # Batch size for training
+    split_size: 0.30                                             # Proportion of data used for validation
 
 VAE:
-    channels: 3 # Number of channels in VAE
-    image_size: 256 # Image size for VAE input
+    channels: 3                                                  # Number of channels in VAE
+    image_size: 256                                              # Image size for VAE input
 
 trainer:
-    epochs: 3000 # Number of training epochs
-    lr: 0.002 # Learning rate
-    weight_decay: 0.0001 # Weight decay for regularization
-    beta1: 0.5 # Beta1 parameter for Adam optimizer
-    beta2: 0.999 # Beta2 parameter for Adam optimizer
-    momentum: 0.95 # Momentum for SGD optimizer (if used)
-    step_size: 10 # Step size for learning rate scheduler
-    gamma: 0.85 # Gamma for learning rate scheduler
-    adam: True # Use Adam optimizer
-    SGD: False # Use SGD optimizer
-    device: "cuda" # Device for training (e.g., cuda for GPU)
-    verbose: True # Verbosity of training output
-    lr_scheduler: False # Use learning rate scheduler
-    weight_init: False # Use weight initialization
-    l1_regularization: False # Use L1 regularization
-    l2_regularization: False # Use L2 regularization
-    MLFlow: True # Use MLFlow for experiment tracking
+    epochs: 3000                                                 # Number of training epochs
+    lr: 0.002                                                    # Learning rate
+    weight_decay: 0.0001                                         # Weight decay for regularization
+    beta1: 0.5                                                   # Beta1 parameter for Adam optimizer
+    beta2: 0.999                                                 # Beta2 parameter for Adam optimizer
+    momentum: 0.95                                               # Momentum for SGD optimizer (if used)
+    step_size: 10                                                # Step size for learning rate scheduler
+    gamma: 0.85                                                  # Gamma for learning rate scheduler
+    adam: True                                                   # Use Adam optimizer
+    SGD: False                                                   # Use SGD optimizer
+    device: "cuda"                                               # Device for training (e.g., cuda for GPU)
+    verbose: True                                                # Verbosity of training output
+    lr_scheduler: False                                          # Use learning rate scheduler
+    weight_init: False                                           # Use weight initialization
+    l1_regularization: False                                     # Use L1 regularization
+    l2_regularization: False                                     # Use L2 regularization
+    MLFlow: True                                                 # Use MLFlow for experiment tracking
 
 tester:
-    model: "best" # Model to be used for testing (e.g., best)
-    device: "cuda" # Device for testing (e.g., cuda for GPU)
+    model: "best"                                                # Model to be used for testing (e.g., best)
+    device: "cuda"                                               # Device for testing (e.g., cuda for GPU)
 
 ```
 
