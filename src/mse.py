@@ -14,7 +14,7 @@ class MSELoss(nn.Module):
 
     def forward(self, pred, actual):
         if isinstance(pred, torch.Tensor) and isinstance(actual, torch.Tensor):
-            self.loss = nn.MSELoss(reduction=self.reduction)
+            self.loss = nn.MSELoss(reduction=self.reduction)    # Brain tumor segmentation is done with BCELoss() and used Sigmoid() in VAE.py
             return self.loss(pred, actual)
 
         else:
