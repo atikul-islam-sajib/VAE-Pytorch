@@ -138,8 +138,8 @@ Here is the table with the MPS commands removed:
 
 | Task                     | CUDA Command                                                                                                              | CPU Command                                                                                                              |
 |--------------------------|---------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
-| **Training a Model**     | `python cli.py --train --image_path "/path/to/dataset" --batch_size 32 --image_size 128 --epochs 50 --lr 0.001 --adam True --is_l1 True --device "cuda"` | `python cli.py --train --image_path "/path/to/dataset" --batch_size 32 --image_size 128 --epochs 50 --lr 0.001 --adam True --is_l1 True --device "cpu"` |
-| **Testing a Model**      | `python cli.py --test --model "/path/to/saved_model.pth" --device "cuda"`                                              | `python cli.py --test --model "/path/to/saved_model.pth" --device "cpu"`                                              |
+| **Training a Model**     | `python cli.py --train --image_path "/path/to/dataset.zip" --batch_size 32 --image_size 128 --epochs 50 --lr 0.001 --adam True --device "cuda"` | `python cli.py --train --image_path "/path/to/dataset.zip" --batch_size 32 --image_size 128 --epochs 50 --lr 0.001 --adam True --device "cpu"` |
+| **Testing a Model**      | `python cli.py --test --model_path "/path/to/saved_model.pth" --device "cuda"`                                              | `python cli.py --test --model_path "/path/to/saved_model.pth" --device "cpu"`                                              |
 
 ### Notes:
 - **CUDA Command**: For systems with NVIDIA GPUs, using the `cuda` device will leverage GPU acceleration.
